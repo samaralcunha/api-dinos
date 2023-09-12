@@ -1,0 +1,16 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = "file:database.db"
+}
+
+model Dino {
+    id       Int    @id @default(autoincrement())
+    nome     String
+    nomeCien String
+    periodo  String
+    imagem   String
+}
