@@ -14,10 +14,51 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
+const cors_1 = __importDefault(require("cors"));
 const prisma = new client_1.PrismaClient();
 const app = (0, express_1.default)();
-app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.use((0, cors_1.default)());
+app.get('/dinos', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const dinos = yield prisma.dino.findMany();
     res.json(dinos);
+}));
+app.get('/jurassico', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const jurassico = yield prisma.dino.findMany({
+            where: {
+                periodo: "Jurássico"
+            }
+        });
+        res.json(jurassico);
+    }
+    catch (_a) {
+        res.status(500).json({ error: "Dinos tão com problema pra aparecer :(" });
+    }
+}));
+app.get('/cretaceo', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const cretaceo = yield prisma.dino.findMany({
+            where: {
+                periodo: "Cretáceo"
+            }
+        });
+        res.json(cretaceo);
+    }
+    catch (_b) {
+        res.staus(500).json({ error: "Dinos tão com problema pra aparecer :(" });
+    }
+}));
+app.get('/triassico', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const triassico = yield prisma.dino.findMany({
+            where: {
+                periodo: "Triássico"
+            }
+        });
+        res.json(triassico);
+    }
+    catch (_c) {
+        res.staus(500).json({ error: "Dinos tão com problema pra aparecer :(" });
+    }
 }));
 app.listen(4000);
